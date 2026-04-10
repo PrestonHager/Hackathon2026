@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://udkldkfwm2tr"]
+
+[ext_resource type="Texture2D" uid="uid://cxek1acokqfj" path="res://assets/Strat-0003.png" id="1_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://j2aqvpgyejx3" path="res://assets/MISSIONgame-0002.png" id="2_fu7sn"]
+[ext_resource type="Script" uid="uid://b8ac8mwou604g" path="res://start.gd" id="2_jix8l"]
+
+[node name="Node2D" type="Node2D" unique_id=1563194522]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=669839214]
+offset_right = 663.0
+offset_bottom = 374.0
+color = Color(0.3440843, 0.11884885, 0.59964615, 1)
+
+[node name="MenuButton" type="MenuButton" parent="." unique_id=173020131]
+offset_left = 274.0
+offset_top = 227.0
+offset_right = 388.0
+offset_bottom = 295.0
+icon = ExtResource("1_7vrkn")
+script = ExtResource("2_jix8l")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=403340511]
+position = Vector2(329, 188)
+scale = Vector2(3, 3)
+texture = ExtResource("2_fu7sn")
