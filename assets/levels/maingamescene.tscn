@@ -1,10 +1,11 @@
-[gd_scene load_steps=86 format=3 uid="uid://dtsf4q858pfus"]
+[gd_scene load_steps=87 format=3 uid="uid://dtsf4q858pfus"]
 
 [ext_resource type="Texture2D" uid="uid://jjicqher1scc" path="res://assets/sprites/moon.png" id="1_grax0"]
 [ext_resource type="Texture2D" uid="uid://bu6jinfmvo2wg" path="res://assets/sprites/Earth-Like planet.png" id="2_wtnim"]
 [ext_resource type="Texture2D" uid="uid://bprefwwaoy2rk" path="res://assets/sprites/rocket.png" id="3_p4b4n"]
-[ext_resource type="Script" path="res://assets/scripts/earth-ani.gd" id="5_earthani"]
+[ext_resource type="Script" path="res://assets/scripts/earth_mission_controller.gd" id="5_earthani"]
 [ext_resource type="Script" path="res://assets/scripts/dashed_polyline_2d.gd" id="6_dashed"]
+[ext_resource type="Script" path="res://assets/scripts/orbit/ksp_orbit_overlay.gd" id="7_kspov"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yhm6y"]
 atlas = ExtResource("2_wtnim")
@@ -569,9 +570,13 @@ point_count = 17
 texture_filter = 1
 script = ExtResource("5_earthani")
 
+[node name="KspOrbitOverlay" type="Node2D" parent="."]
+z_index = 12
+script = ExtResource("7_kspov")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 180)
-zoom = Vector2(2.35, 2.35)
+zoom = Vector2(0.72, 0.72)
 
 [node name="TransferPath" type="Path2D" parent="."]
 position = Vector2(320, 180)
