@@ -1,4 +1,4 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://f1bloijf05wq"]
+[gd_resource type="LabelSettings" format=3 uid="uid://f1bloijf05wq"]
 
 [sub_resource type="SystemFont" id="SystemFont_pe787"]
 font_names = PackedStringArray("Cambria")
