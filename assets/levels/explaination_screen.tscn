@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://560i7ecmj2l"]
 
 [ext_resource type="Texture2D" uid="uid://1hd14vy6n4of" path="res://assets/sprites/Strat-0003.png" id="1_wn4k5"]
+[ext_resource type="Script" path="res://assets/scripts/dashed_polyline_2d.gd" id="2_2f4q2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2f4q2"]
 
@@ -28,3 +29,4 @@ text = "START"
 [node name="Strat0003" type="Sprite2D" parent="." unique_id=1637183943]
 position = Vector2(338, 242)
 texture = ExtResource("1_wn4k5")
+script = ExtResource("2_2f4q2")

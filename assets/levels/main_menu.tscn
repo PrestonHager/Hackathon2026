@@ -14,6 +14,7 @@ texture_filter = 1
 offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0.222022, 0.0630504, 0.400472, 1)
+script = ExtResource("2_jix8l")
 
 [node name="MenuButton" type="MenuButton" parent="." unique_id=27569743]
 offset_left = 264.0
@@ -32,6 +33,7 @@ texture = ExtResource("2_fu7sn")
 position = Vector2(84, 75)
 scale = Vector2(1.46, 1.74)
 texture = ExtResource("4_bdt7q")
+script = ExtResource("2_jix8l")
 
 [node name="Star2" type="Sprite2D" parent="." unique_id=1096286561]
 position = Vector2(57, 119)
