@@ -18,6 +18,7 @@ texture_filter = 2
 script = ExtResource("1_f2mtr")
 
 [node name="Label" type="Label" parent="."]
+texture_filter = 1
 offset_left = 22.0
 offset_top = 4.0
 offset_right = 520.0
@@ -26,6 +27,7 @@ theme_override_font_sizes/font_size = 20
 text = "Mission planning — crew"
 
 [node name="CostLegend" type="Label" parent="."]
+texture_filter = 1
 offset_left = 22.0
 offset_top = 30.0
 offset_right = 620.0
@@ -34,6 +36,7 @@ theme_override_font_sizes/font_size = 12
 text = "Costs: Alien $20M · Astro $15M · Bear $10M · Buff $18M"
 
 [node name="budget" type="Label" parent="."]
+texture_filter = 1
 offset_left = 25.0
 offset_top = 46.0
 offset_right = 600.0
@@ -42,6 +45,7 @@ theme_override_font_sizes/font_size = 14
 text = "Budget: $75 M left  (started with $75 M)"
 
 [node name="crewTotalLabel" type="Label" parent="."]
+texture_filter = 1
 offset_left = 25.0
 offset_top = 62.0
 offset_right = 600.0
@@ -51,6 +55,7 @@ text = "Crew: 0 / 3  (use − / + to mix types)"
 label_settings = SubResource("LabelSettings_hint")
 
 [node name="budgetSlider" type="HSlider" parent="."]
+texture_filter = 1
 offset_left = 25.0
 offset_top = 78.0
 offset_right = 615.0
@@ -60,6 +65,7 @@ value = 75.0
 editable = false
 
 [node name="alien" type="TextureRect" parent="."]
+texture_filter = 2
 offset_left = 20.0
 offset_top = 94.0
 offset_right = 164.0
@@ -70,6 +76,7 @@ stretch_mode = 5
 
 [node name="CountLabel" type="Label" parent="alien"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 40.0
 offset_top = 58.0
 offset_right = 100.0
@@ -80,6 +87,7 @@ horizontal_alignment = 1
 
 [node name="Minus" type="Button" parent="alien"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 4.0
 offset_top = 82.0
 offset_right = 44.0
@@ -88,6 +96,7 @@ text = "−"
 
 [node name="Plus" type="Button" parent="alien"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 100.0
 offset_top = 82.0
 offset_right = 140.0
@@ -95,6 +104,7 @@ offset_bottom = 106.0
 text = "+"
 
 [node name="astronaut" type="TextureRect" parent="."]
+texture_filter = 2
 offset_left = 172.0
 offset_top = 94.0
 offset_right = 316.0
@@ -105,6 +115,7 @@ stretch_mode = 5
 
 [node name="CountLabel" type="Label" parent="astronaut"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 40.0
 offset_top = 58.0
 offset_right = 100.0
@@ -115,6 +126,7 @@ horizontal_alignment = 1
 
 [node name="Minus" type="Button" parent="astronaut"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 4.0
 offset_top = 82.0
 offset_right = 44.0
@@ -123,6 +135,7 @@ text = "−"
 
 [node name="Plus" type="Button" parent="astronaut"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 100.0
 offset_top = 82.0
 offset_right = 140.0
@@ -130,6 +143,7 @@ offset_bottom = 106.0
 text = "+"
 
 [node name="bear" type="TextureRect" parent="."]
+texture_filter = 2
 offset_left = 324.0
 offset_top = 94.0
 offset_right = 468.0
@@ -140,6 +154,7 @@ stretch_mode = 5
 
 [node name="CountLabel" type="Label" parent="bear"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 40.0
 offset_top = 58.0
 offset_right = 100.0
@@ -150,6 +165,7 @@ horizontal_alignment = 1
 
 [node name="Minus" type="Button" parent="bear"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 4.0
 offset_top = 82.0
 offset_right = 44.0
@@ -158,6 +174,7 @@ text = "−"
 
 [node name="Plus" type="Button" parent="bear"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 100.0
 offset_top = 82.0
 offset_right = 140.0
@@ -165,6 +182,7 @@ offset_bottom = 106.0
 text = "+"
 
 [node name="BuffGuy" type="TextureRect" parent="."]
+texture_filter = 2
 offset_left = 476.0
 offset_top = 94.0
 offset_right = 620.0
@@ -175,6 +193,7 @@ stretch_mode = 5
 
 [node name="CountLabel" type="Label" parent="BuffGuy"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 52.0
 offset_top = 58.0
 offset_right = 112.0
@@ -185,6 +204,7 @@ horizontal_alignment = 1
 
 [node name="Minus" type="Button" parent="BuffGuy"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 8.0
 offset_top = 82.0
 offset_right = 48.0
@@ -193,6 +213,7 @@ text = "−"
 
 [node name="Plus" type="Button" parent="BuffGuy"]
 layout_mode = 0
+texture_filter = 1
 offset_left = 108.0
 offset_top = 82.0
 offset_right = 148.0
@@ -200,6 +221,7 @@ offset_bottom = 106.0
 text = "+"
 
 [node name="BackBtn" type="Button" parent="."]
+texture_filter = 1
 offset_left = 24.0
 offset_top = 264.0
 offset_right = 164.0
@@ -207,6 +229,7 @@ offset_bottom = 298.0
 text = "Back"
 
 [node name="NextBtn" type="Button" parent="."]
+texture_filter = 1
 offset_left = 476.0
 offset_top = 264.0
 offset_right = 616.0

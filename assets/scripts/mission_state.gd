@@ -134,8 +134,17 @@ func go_main_menu() -> void:
 func go_explanation() -> void:
 	if not cargo_requirements_met():
 		return
-	planning_phase = PlanningPhase.EXPLANATION
+	_set_phase_explanation()
 	get_tree().change_scene_to_file(PATH_EXPLANATION)
+
+
+func mark_explanation_phase() -> void:
+	## Call from `explaination_screen` when the scene loads (same state as after `go_explanation`).
+	_set_phase_explanation()
+
+
+func _set_phase_explanation() -> void:
+	planning_phase = PlanningPhase.EXPLANATION
 
 
 func launch_mission() -> void:

@@ -573,6 +573,7 @@ z_index = 5
 loop = false
 
 [node name="Earth" type="AnimatedSprite2D" parent="." unique_id=1277914742]
+texture_filter = 2
 z_index = 2
 position = Vector2(350.00003, 422.00003)
 scale = Vector2(4.9023438, 5.03125)
@@ -586,6 +587,7 @@ z_index = 5
 position = Vector2(320, 76)
 
 [node name="Rocket" type="Sprite2D" parent="PadAnchor" unique_id=1138897505]
+texture_filter = 2
 position = Vector2(7, 115)
 scale = Vector2(5.4375, 6.6354165)
 texture = ExtResource("4_24nbk")
@@ -599,6 +601,7 @@ position = Vector2(-14.160917, -0.60282516)
 scale = Vector2(0.0130612245, 0.01647173)
 
 [node name="CPSlider" type="VSlider" parent="." unique_id=405059668]
+texture_filter = 1
 z_index = 6
 offset_left = 291.0
 offset_top = 176.0
@@ -606,6 +609,7 @@ offset_right = 348.0
 offset_bottom = 240.0
 
 [node name="CGSlider" type="VSlider" parent="." unique_id=739870905]
+texture_filter = 1
 z_index = 5
 offset_left = 319.0
 offset_top = 175.0
@@ -613,14 +617,17 @@ offset_right = 354.0
 offset_bottom = 240.36899
 
 [node name="StabilityLabel" type="Label" parent="." unique_id=1384246515]
+texture_filter = 1
 offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="TextEdit" type="TextEdit" parent="." unique_id=307147258]
+texture_filter = 1
 offset_right = 8.0
 offset_bottom = 8.0
 
 [node name="Label" type="Label" parent="TextEdit" unique_id=1522331638]
+texture_filter = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0

@@ -590,6 +590,7 @@ z_index = 5
 loop = false
 
 [node name="Earth" type="AnimatedSprite2D" parent="."]
+texture_filter = 2
 z_index = 2
 position = Vector2(320, 180)
 scale = Vector2(4, 4)
@@ -603,6 +604,7 @@ z_index = 5
 position = Vector2(320, 75)
 
 [node name="Rocket" type="Sprite2D" parent="PadAnchor"]
+texture_filter = 2
 z_index = 2
 position = Vector2(0, -22)
 scale = Vector2(3, 3)
@@ -642,6 +644,7 @@ position = Vector2(235, 0)
 rotates = false
 
 [node name="Moon" type="Sprite2D" parent="MoonOrbitPath/MoonFollow"]
+texture_filter = 2
 z_index = 1
 scale = Vector2(2.8, 2.8)
 texture = ExtResource("1_grax0")

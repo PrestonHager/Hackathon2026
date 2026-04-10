@@ -5,7 +5,7 @@ extends Control
 
 
 func _ready() -> void:
-	MissionState.planning_phase = MissionState.PlanningPhase.EXPLANATION
+	MissionState.mark_explanation_phase()
 	_btn_back.pressed.connect(_on_back_pressed)
 	_btn_continue.pressed.connect(_on_continue_pressed)
 

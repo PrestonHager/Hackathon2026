@@ -1,5 +1,7 @@
 extends Control
 
+const _TEXTURE_LINEAR := CanvasItem.TEXTURE_FILTER_LINEAR
+
 @onready var _budget_label: Label = $VBox/BudgetLabel
 @onready var _budget_slider: HSlider = $VBox/BudgetSlider
 @onready var _req_label: Label = $VBox/ReqLabel
@@ -29,11 +31,13 @@ func _build_rows() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
 		var name_l := Label.new()
+		name_l.texture_filter = _TEXTURE_LINEAR
 		name_l.text = "%s — $%d M each" % [it["name"], it["cost"]]
 		name_l.add_theme_font_size_override("font_size", 11)
 		name_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		name_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var stats := Label.new()
+		stats.texture_filter = _TEXTURE_LINEAR
 		stats.text = "F%+d W%+d H%+d M%+d" % [
 			int(it["food"]),
 			int(it["water"]),
@@ -43,13 +47,16 @@ func _build_rows() -> void:
 		stats.add_theme_font_size_override("font_size", 10)
 		stats.custom_minimum_size.x = 118
 		var minus := Button.new()
+		minus.texture_filter = _TEXTURE_LINEAR
 		minus.text = "−"
 		minus.custom_minimum_size = Vector2(28, 24)
 		var cnt := Label.new()
+		cnt.texture_filter = _TEXTURE_LINEAR
 		cnt.custom_minimum_size = Vector2(32, 0)
 		cnt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		cnt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		var plus := Button.new()
+		plus.texture_filter = _TEXTURE_LINEAR
 		plus.text = "+"
 		plus.custom_minimum_size = Vector2(28, 24)
 		var id: String = it["id"]
