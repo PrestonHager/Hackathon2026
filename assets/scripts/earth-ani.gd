@@ -1,15 +1,15 @@
 extends Node2D
 
-## Pad → LEO → Hohmann transfer → moon orbit.
-## Orbit Path2D nodes are centered on Earth each run. Transfer motion uses a high-res half-ellipse;
-## the orange dashed overlay is the full ellipse (peri on LEO, apo on lunar altitude).
+## Pad → LEO → Earth-centered Hohmann transfer → lunar capture burn → orbit around the Moon.
+## The dashed transfer ellipse morphs from the Earth-frame ellipse down to a small circle around the Moon.
 
 enum Phase {
 	INTRO,
 	LIFTOFF,
 	LEO_ORBIT,
 	TRANSFER_BURN,
-	MOON_ORBIT,
+	LUNAR_CAPTURE,
+	LUNAR_ORBIT,
 }
 
 @export var intro_duration: float = 1.2
@@ -22,9 +22,14 @@ enum Phase {
 @export var leo_orbit_speed: float = 0.105
 @export var moon_orbit_speed: float = 0.036
 @export var liftoff_target_offset: Vector2 = Vector2(0.0, -130.0)
-## Pad position relative to Earth sprite center (match your layout if Earth moves).
 @export var pad_offset_from_earth: Vector2 = Vector2(-24.0, -157.0)
 @export var leo_peri_sync_duration: float = 0.85
+
+@export_group("Lunar capture")
+@export var lunar_orbit_radius: float = 38.0
+@export var lunar_capture_duration: float = 2.15
+@export var lunar_capture_burn_fraction: float = 0.42
+@export var lunar_orbit_speed: float = 0.16
 
 @export_group("Camera (zoom > 1 = closer, < 1 = wider view)")
 @export var zoom_intro: Vector2 = Vector2(1.0, 1.0)
@@ -43,6 +48,7 @@ const MOON_R := 235.0
 const ROCKET_HEADING := 1.5708
 const TRANSFER_CURVE_STEPS := 128
 const FULL_ELLIPSE_SEGMENTS := 240
+const LUNAR_PATH_SEGMENTS := 48
 
 @onready var camera: Camera2D = $Camera2D
 @onready var earth: AnimatedSprite2D = $Earth
@@ -54,11 +60,14 @@ const FULL_ELLIPSE_SEGMENTS := 240
 @onready var moon_path: Path2D = $MoonOrbitPath
 @onready var moon_follow: PathFollow2D = $MoonOrbitPath/MoonFollow
 @onready var moon: Sprite2D = $MoonOrbitPath/MoonFollow/Moon
-@onready var rocket_moon: PathFollow2D = $MoonOrbitPath/RocketMoon
+@onready var lunar_orbit_path: Path2D = $MoonOrbitPath/MoonFollow/LunarOrbitPath
+@onready var rocket_lunar: PathFollow2D = $MoonOrbitPath/MoonFollow/LunarOrbitPath/RocketLunar
 @onready var moon_orbit_visual: Line2D = $MoonOrbitPath/MoonOrbitVisual
 @onready var transfer_path: Path2D = $TransferPath
 @onready var transfer_visual: DashedPolyline2D = $TransferPath/TransferOrbitVisual
 @onready var rocket_transfer: PathFollow2D = $TransferPath/RocketTransfer
+
+var _full_ellipse_transfer_local: PackedVector2Array = PackedVector2Array()
 
 var _phase: Phase = Phase.INTRO
 
@@ -73,9 +82,9 @@ func _ready() -> void:
 	moon_orbit_visual.visible = false
 	transfer_visual.visible = false
 	_build_transfer_path()
+	_build_lunar_orbit_path()
 
 	moon_follow.progress_ratio = 0.12
-	rocket_moon.progress_ratio = 0.1
 
 	var peri_off: float = leo_path.curve.get_closest_offset(Vector2(0.0, -LEO_R))
 	leo_follow.progress = peri_off
@@ -111,11 +120,28 @@ func _build_transfer_path() -> void:
 		curve.add_point(Vector2(b * cos(t), cy + a * sin(t)))
 	transfer_path.curve = curve
 
-	var full_pts := PackedVector2Array()
+	_full_ellipse_transfer_local.clear()
 	for i in range(FULL_ELLIPSE_SEGMENTS + 1):
 		var t := TAU * float(i) / float(FULL_ELLIPSE_SEGMENTS)
-		full_pts.append(Vector2(b * cos(t), cy + a * sin(t)))
-	transfer_visual.set_polyline(full_pts)
+		_full_ellipse_transfer_local.append(Vector2(b * cos(t), cy + a * sin(t)))
+	transfer_visual.set_polyline(_full_ellipse_transfer_local)
+
+
+func _build_lunar_orbit_path() -> void:
+	var curve := Curve2D.new()
+	var r := lunar_orbit_radius
+	for i in range(LUNAR_PATH_SEGMENTS + 1):
+		var t := TAU * float(i) / float(LUNAR_PATH_SEGMENTS)
+		curve.add_point(Vector2(cos(t) * r, sin(t) * r))
+	lunar_orbit_path.curve = curve
+
+
+func _lunar_circle_polyline_local() -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	for i in range(FULL_ELLIPSE_SEGMENTS + 1):
+		var t := TAU * float(i) / float(FULL_ELLIPSE_SEGMENTS)
+		pts.append(Vector2(cos(t), sin(t)) * lunar_orbit_radius)
+	return pts
 
 
 func _tween_camera_wait(zoom: Vector2, duration: float) -> void:
@@ -177,11 +203,65 @@ func _attach_rocket_to_transfer() -> void:
 	await get_tree().process_frame
 
 
-func _attach_rocket_to_moon_orbit() -> void:
-	var local_snap: Vector2 = moon_path.to_local(rocket.global_position)
-	var off: float = moon_path.curve.get_closest_offset(local_snap)
-	rocket_moon.progress = off
-	rocket.reparent(rocket_moon, false)
+func _orbit_morph_step(w: float) -> void:
+	var n: int = _full_ellipse_transfer_local.size()
+	if n < 2:
+		return
+	var moon_g: Vector2 = moon.global_position
+	var pts := PackedVector2Array()
+	pts.resize(n)
+	for i in range(n):
+		var pb: Vector2 = transfer_path.to_global(_full_ellipse_transfer_local[i])
+		var ang: float = TAU * float(i) / float(n - 1)
+		var ps: Vector2 = moon_g + Vector2(cos(ang), sin(ang)) * lunar_orbit_radius
+		var pg: Vector2 = pb.lerp(ps, w)
+		pts[i] = to_local(pg)
+	transfer_visual.set_polyline(pts)
+
+
+func _capture_and_morph_step(r0: Vector2, cap: Vector2, w: float) -> void:
+	rocket.global_position = r0.lerp(cap, w)
+	_orbit_morph_step(w)
+	if w < clampf(lunar_capture_burn_fraction, 0.08, 0.95) - 1e-6:
+		rocket.texture = TEX_BURN
+	else:
+		rocket.texture = TEX_ROCKET
+
+
+func _begin_lunar_capture_sequence() -> void:
+	# Detach rocket from Earth transfer path; dashed ellipse reparents to scene root for world-space morph.
+	rocket.reparent(self, true)
+	transfer_visual.reparent(self, false)
+	transfer_visual.z_index = 4
+	_orbit_morph_step(0.0)
+	await get_tree().process_frame
+
+	var r0: Vector2 = rocket.global_position
+	var moon_c: Vector2 = moon.global_position
+	var outward: Vector2 = (r0 - moon_c)
+	if outward.length() < 2.0:
+		outward = Vector2(1.0, 0.0)
+	else:
+		outward = outward.normalized()
+	var capture_target: Vector2 = moon_c + outward * lunar_orbit_radius
+
+	_phase = Phase.LUNAR_CAPTURE
+	var tw_cap := create_tween()
+	tw_cap.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw_cap.tween_method(_capture_and_morph_step.bind(r0, capture_target), 0.0, 1.0, lunar_capture_duration)
+	await tw_cap.finished
+	_set_rocket_coast()
+	rocket.global_position = capture_target
+
+	# Lock dashed path to moon-centered lunar orbit (same style, now small circle).
+	transfer_visual.reparent(lunar_orbit_path, false)
+	transfer_visual.position = Vector2.ZERO
+	transfer_visual.set_polyline(_lunar_circle_polyline_local())
+
+	await get_tree().process_frame
+	var loff: float = lunar_orbit_path.curve.get_closest_offset(lunar_orbit_path.to_local(rocket.global_position))
+	rocket_lunar.progress = loff
+	rocket.reparent(rocket_lunar, false)
 	rocket.position = Vector2.ZERO
 	rocket.rotation = ROCKET_HEADING
 	await get_tree().process_frame
@@ -192,8 +272,8 @@ func _process(delta: float) -> void:
 	match _phase:
 		Phase.LEO_ORBIT:
 			leo_follow.progress_ratio += leo_orbit_speed * delta
-		Phase.MOON_ORBIT:
-			rocket_moon.progress_ratio += moon_orbit_speed * delta
+		Phase.LUNAR_ORBIT:
+			rocket_lunar.progress_ratio += lunar_orbit_speed * delta
 
 
 func _run_mission() -> void:
@@ -242,9 +322,9 @@ func _run_mission() -> void:
 	rocket_transfer.progress_ratio = 1.0
 	_set_rocket_coast()
 
-	await _attach_rocket_to_moon_orbit()
+	await _begin_lunar_capture_sequence()
 
-	_phase = Phase.MOON_ORBIT
+	_phase = Phase.LUNAR_ORBIT
 
 
 func _transfer_progress_step(burn_end: float, u: float) -> void:
@@ -253,4 +333,3 @@ func _transfer_progress_step(burn_end: float, u: float) -> void:
 		rocket.texture = TEX_BURN
 	else:
 		rocket.texture = TEX_ROCKET
-
