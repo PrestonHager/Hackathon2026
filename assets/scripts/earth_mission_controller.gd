@@ -3,6 +3,9 @@ extends Node2D
 ## Scripted mission orchestration: liftoff → LEO → transfer → lunar capture.
 ## Logic is split under `res://assets/scripts/mission/` (geometry, camera, burn, bootstrap).
 
+# TEMP (liftoff off): uncomment when restoring liftoff in _run_mission.
+# var _liftoff_routines: MissionLiftoffRoutines = MissionLiftoffRoutines.new()
+
 enum Phase {
 	INTRO,
 	LIFTOFF,
@@ -24,7 +27,14 @@ enum Phase {
 @export var liftoff_use_radial: bool = true
 @export var liftoff_distance: float = 188.0
 @export var liftoff_blend_to_leo_insertion: bool = true
-@export var liftoff_radial_phase_ratio: float = 0.52
+## Share of liftoff tween spent climbing straight (fixed world X), then curving +X into LEO peri.
+@export var liftoff_vertical_phase_ratio: float = 0.44
+## Pushes the gravity-turn bezier outward on +X so the arc reads clearly before circularization.
+@export var liftoff_turn_outset: float = 40.0
+## Pans camera from Earth center toward the rocket so ascent stays in frame (0 = fixed map cam).
+@export var liftoff_camera_follow_strength: float = 0.55
+## Minimum screen-up climb (+Y down) before the gravity turn; avoids a sideways wiggle when pad ≈ peri height.
+@export var liftoff_min_vertical_climb: float = 52.0
 @export var liftoff_target_offset: Vector2 = Vector2(0.0, -130.0)
 @export var pad_offset_from_earth: Vector2 = Vector2(-24.0, -157.0)
 @export var leo_peri_max_wait: float = 22.0
@@ -34,14 +44,16 @@ enum Phase {
 @export var transfer_coast_during_camera_fraction: float = 0.048
 
 @export_group("Lunar capture")
-@export var lunar_orbit_radius: float = 38.0
+@export var lunar_orbit_radius: float = 50.0
 @export var lunar_capture_duration: float = 2.15
 @export var lunar_capture_burn_fraction: float = 0.42
 @export var lunar_orbit_speed: float = 0.16
 
 @export_group("Camera (higher zoom = closer; lower = wider; use non-increasing values top→bottom)")
 @export var zoom_intro: Vector2 = Vector2(0.72, 0.72)
-@export var zoom_liftoff: Vector2 = Vector2(0.68, 0.68)
+## Tight framing while the rocket ascends so it does not read as leaving Earth before LEO; then zoom_leo pulls back.
+@export var zoom_liftoff_ascent: Vector2 = Vector2(0.94, 0.94)
+@export var liftoff_ascent_zoom_duration_fraction: float = 0.38
 @export var zoom_leo: Vector2 = Vector2(0.60, 0.60)
 @export var zoom_transfer_reveal: Vector2 = Vector2(0.50, 0.50)
 @export var zoom_full_system: Vector2 = Vector2(0.42, 0.42)
@@ -132,8 +144,7 @@ func _ready() -> void:
 	_sync_ksp_transfer_apsides_markers()
 	ksp_overlay.set_transfer_apsides_visible(false)
 
-	var peri_off: float = leo_path.curve.get_closest_offset(Vector2(0.0, -MissionConstants.LEO_R))
-	leo_follow.progress = peri_off
+	leo_follow.progress = 0.0
 	_set_rocket_coast()
 	_mdbg("READY", "curve_len=%s xfer_after_growth will be set later" % _transfer_curve_length)
 	_run_mission()
@@ -260,8 +271,7 @@ func _set_rocket_coast() -> void:
 
 func _attach_rocket_to_leo() -> void:
 	_mdbg("ATTACH_LEO", "snap rocket to RocketLEO at peri")
-	var peri_off: float = leo_path.curve.get_closest_offset(Vector2(0.0, -MissionConstants.LEO_R))
-	leo_follow.progress = peri_off
+	leo_follow.progress = 0.0
 	await get_tree().process_frame
 	rocket.reparent(leo_follow, true)
 	rocket.position = Vector2.ZERO
@@ -374,14 +384,14 @@ func _process(delta: float) -> void:
 			rocket_lunar.progress_ratio += lunar_orbit_speed * delta
 
 
-## Must match branch order in `MissionTransferBurn.run_elapsed_from`.
-func _transfer_debug_segment_index(start_p: float, burn_end: float, clen: float, t_burn: float, elapsed: float) -> int:
+## Matches burn vs coast visuals in `MissionTransferBurn.run_elapsed_from` (progress-based).
+func _transfer_debug_segment_index(start_p: float, burn_end: float, clen: float) -> int:
 	var d_burn_end: float = clampf(burn_end, 0.04, 0.45) * clen
 	var sp: float = clampf(start_p, 0.0, clen)
-	var t_b: float = maxf(t_burn, 1e-5)
+	var p: float = rocket_transfer.progress
 	if sp >= d_burn_end - 0.25:
 		return 2
-	if elapsed < t_b:
+	if p < d_burn_end - 0.25:
 		return 0
 	return 1
 
@@ -410,9 +420,7 @@ func _run_transfer_elapsed_from(start_p: float, burn_end: float, t_burn: float, 
 		elapsed
 	)
 	if mission_debug_logging:
-		var seg: int = _transfer_debug_segment_index(
-			start_p, burn_end, _transfer_curve_length, t_burn, elapsed
-		)
+		var seg: int = _transfer_debug_segment_index(start_p, burn_end, _transfer_curve_length)
 		if seg != _transfer_burn_debug_state.get("last_segment", -999):
 			_transfer_burn_debug_state["last_segment"] = seg
 			var clen: float = _transfer_curve_length
@@ -449,45 +457,60 @@ func _run_mission() -> void:
 	await _tween_camera_wait(zoom_intro, 0.35)
 	await get_tree().create_timer(intro_duration).timeout
 
-	_phase = Phase.LIFTOFF
-	_mdbg("LIFTOFF", "begin ascent")
-	var peri_off_lift: float = leo_path.curve.get_closest_offset(Vector2(0.0, -MissionConstants.LEO_R))
-	leo_follow.progress = peri_off_lift
+	# --- TEMP: liftoff phase disabled. Uncomment block below and remove this glue to restore. ---
+	leo_follow.progress = 0.0
 	await get_tree().process_frame
-	var insert_gp: Vector2 = leo_follow.global_position
-	var p0_lift: Vector2 = rocket.global_position
-	var leo_g: Vector2 = leo_path.global_position
-
-	var z_lift := Vector2(minf(camera.zoom.x, zoom_liftoff.x), minf(camera.zoom.y, zoom_liftoff.y))
-	var tw_zoom_lift := create_tween()
-	tw_zoom_lift.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tw_zoom_lift.tween_property(camera, "zoom", z_lift, liftoff_duration * 0.35)
-	_set_rocket_burning()
-	var tw_lift := create_tween()
-	if liftoff_blend_to_leo_insertion and liftoff_use_radial:
-		tw_lift.tween_method(
-			func(u: float) -> void:
-				MissionLiftoffRoutines.liftoff_ascent_blend(
-					rocket, leo_g, p0_lift, insert_gp, liftoff_radial_phase_ratio, liftoff_distance, u
-				),
-			0.0,
-			1.0,
-			liftoff_duration
-		)
-	elif liftoff_blend_to_leo_insertion:
-		tw_lift.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-		tw_lift.tween_property(rocket, "global_position", insert_gp, liftoff_duration)
-	else:
-		var ascent_target: Vector2 = MissionLiftoffRoutines.liftoff_target_global(
-			leo_g, rocket.global_position, liftoff_use_radial, liftoff_distance, liftoff_target_offset
-		)
-		tw_lift.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-		tw_lift.tween_property(rocket, "global_position", ascent_target, liftoff_duration)
-	await tw_lift.finished
+	var leo_g_skip: Vector2 = leo_path.global_position
+	camera.global_position = leo_g_skip + camera_focus_offset
 	_set_rocket_coast()
-
 	await _attach_rocket_to_leo()
-	_mdbg("LIFTOFF", "attached LEO PathFollow")
+	_mdbg("LIFTOFF", "[TEMP] liftoff skipped — attached LEO PathFollow")
+	# _phase = Phase.LIFTOFF
+	# _mdbg("LIFTOFF", "begin ascent")
+	# # Polyline LEO starts at peri; analytic point avoids faceted closest_offset jitter vs pad.
+	# leo_follow.progress = 0.0
+	# await get_tree().process_frame
+	# var insert_gp: Vector2 = leo_path.to_global(Vector2(0.0, -MissionConstants.LEO_R))
+	# var p0_lift: Vector2 = rocket.global_position
+	# var leo_g: Vector2 = leo_path.global_position
+	#
+	# var zoom_ascent_dur: float = liftoff_duration * clampf(liftoff_ascent_zoom_duration_fraction, 0.05, 1.0)
+	# var tw_zoom_ascent := create_tween()
+	# tw_zoom_ascent.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	# tw_zoom_ascent.tween_property(camera, "zoom", zoom_liftoff_ascent, zoom_ascent_dur)
+	# _set_rocket_burning()
+	# var tw_lift := create_tween()
+	# if liftoff_blend_to_leo_insertion:
+	# 	var liftoff_step := func(u: float) -> void:
+	# 		_liftoff_routines.liftoff_vertical_then_leo_insert(
+	# 			rocket,
+	# 			p0_lift,
+	# 			insert_gp,
+	# 			liftoff_vertical_phase_ratio,
+	# 			liftoff_turn_outset,
+	# 			liftoff_min_vertical_climb,
+	# 			u
+	# 		)
+	# 		var sm: float = u * u * (3.0 - 2.0 * u)
+	# 		camera.global_position = (
+	# 			leo_g
+	# 			+ camera_focus_offset
+	# 			+ (rocket.global_position - leo_g) * liftoff_camera_follow_strength * sm
+	# 		)
+	# 	tw_lift.tween_method(liftoff_step, 0.0, 1.0, liftoff_duration)
+	# else:
+	# 	var ascent_target: Vector2 = _liftoff_routines.liftoff_target_global(
+	# 		leo_g, rocket.global_position, liftoff_use_radial, liftoff_distance, liftoff_target_offset
+	# 	)
+	# 	tw_lift.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	# 	tw_lift.tween_property(rocket, "global_position", ascent_target, liftoff_duration)
+	# await tw_lift.finished
+	# camera.global_position = leo_g + camera_focus_offset
+	# _set_rocket_coast()
+	#
+	# await _attach_rocket_to_leo()
+	# _mdbg("LIFTOFF", "attached LEO PathFollow")
+	# --- end TEMP liftoff ---
 
 	_phase = Phase.LEO_ORBIT
 	_mdbg("LEO_ORBIT", "circularization + wait peri")
