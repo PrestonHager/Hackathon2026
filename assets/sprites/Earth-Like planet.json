@@ -1,0 +1,640 @@
+{ "frames": {
+   "Earth-Like planet 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 1.aseprite": {
+    "frame": { "x": 88, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 2.aseprite": {
+    "frame": { "x": 176, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 3.aseprite": {
+    "frame": { "x": 264, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 4.aseprite": {
+    "frame": { "x": 352, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 5.aseprite": {
+    "frame": { "x": 440, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 6.aseprite": {
+    "frame": { "x": 528, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 7.aseprite": {
+    "frame": { "x": 616, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 8.aseprite": {
+    "frame": { "x": 704, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 9.aseprite": {
+    "frame": { "x": 792, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 10.aseprite": {
+    "frame": { "x": 880, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 11.aseprite": {
+    "frame": { "x": 968, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 12.aseprite": {
+    "frame": { "x": 1056, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 13.aseprite": {
+    "frame": { "x": 1144, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 14.aseprite": {
+    "frame": { "x": 1232, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 15.aseprite": {
+    "frame": { "x": 1320, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 16.aseprite": {
+    "frame": { "x": 1408, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 17.aseprite": {
+    "frame": { "x": 1496, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 18.aseprite": {
+    "frame": { "x": 1584, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 19.aseprite": {
+    "frame": { "x": 1672, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 20.aseprite": {
+    "frame": { "x": 1760, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 21.aseprite": {
+    "frame": { "x": 1848, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 22.aseprite": {
+    "frame": { "x": 1936, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 23.aseprite": {
+    "frame": { "x": 2024, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 24.aseprite": {
+    "frame": { "x": 2112, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 25.aseprite": {
+    "frame": { "x": 2200, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 26.aseprite": {
+    "frame": { "x": 2288, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 27.aseprite": {
+    "frame": { "x": 2376, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 28.aseprite": {
+    "frame": { "x": 2464, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 29.aseprite": {
+    "frame": { "x": 2552, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 30.aseprite": {
+    "frame": { "x": 2640, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 31.aseprite": {
+    "frame": { "x": 2728, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 32.aseprite": {
+    "frame": { "x": 2816, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 33.aseprite": {
+    "frame": { "x": 2904, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 34.aseprite": {
+    "frame": { "x": 2992, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 35.aseprite": {
+    "frame": { "x": 3080, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 36.aseprite": {
+    "frame": { "x": 3168, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 37.aseprite": {
+    "frame": { "x": 3256, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 38.aseprite": {
+    "frame": { "x": 3344, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 39.aseprite": {
+    "frame": { "x": 3432, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 40.aseprite": {
+    "frame": { "x": 3520, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 41.aseprite": {
+    "frame": { "x": 3608, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 42.aseprite": {
+    "frame": { "x": 3696, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 43.aseprite": {
+    "frame": { "x": 3784, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 44.aseprite": {
+    "frame": { "x": 3872, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 45.aseprite": {
+    "frame": { "x": 3960, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 46.aseprite": {
+    "frame": { "x": 4048, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 47.aseprite": {
+    "frame": { "x": 4136, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 48.aseprite": {
+    "frame": { "x": 4224, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 49.aseprite": {
+    "frame": { "x": 4312, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 50.aseprite": {
+    "frame": { "x": 4400, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 51.aseprite": {
+    "frame": { "x": 4488, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 52.aseprite": {
+    "frame": { "x": 4576, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 53.aseprite": {
+    "frame": { "x": 4664, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 54.aseprite": {
+    "frame": { "x": 4752, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 55.aseprite": {
+    "frame": { "x": 4840, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 56.aseprite": {
+    "frame": { "x": 4928, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 57.aseprite": {
+    "frame": { "x": 5016, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 58.aseprite": {
+    "frame": { "x": 5104, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 59.aseprite": {
+    "frame": { "x": 5192, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 60.aseprite": {
+    "frame": { "x": 5280, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 61.aseprite": {
+    "frame": { "x": 5368, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 62.aseprite": {
+    "frame": { "x": 5456, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 63.aseprite": {
+    "frame": { "x": 5544, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 64.aseprite": {
+    "frame": { "x": 5632, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 65.aseprite": {
+    "frame": { "x": 5720, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 66.aseprite": {
+    "frame": { "x": 5808, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 67.aseprite": {
+    "frame": { "x": 5896, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 68.aseprite": {
+    "frame": { "x": 5984, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 69.aseprite": {
+    "frame": { "x": 6072, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 70.aseprite": {
+    "frame": { "x": 6160, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 71.aseprite": {
+    "frame": { "x": 6248, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 72.aseprite": {
+    "frame": { "x": 6336, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 73.aseprite": {
+    "frame": { "x": 6424, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 74.aseprite": {
+    "frame": { "x": 6512, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 75.aseprite": {
+    "frame": { "x": 6600, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   "Earth-Like planet 76.aseprite": {
+    "frame": { "x": 6688, "y": 0, "w": 88, "h": 102 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 90, "y": 26, "w": 88, "h": 102 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-x64",
+  "image": "Earth-Like planet.png",
+  "format": "RGBA8888",
+  "size": { "w": 6776, "h": 102 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Back glow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Surface", "opacity": 255, "blendMode": "normal" },
+   { "name": "Clouds", "opacity": 255, "blendMode": "normal" },
+   { "name": "Planet glow", "opacity": 128, "blendMode": "overlay" },
+   { "name": "Outline", "opacity": 255, "blendMode": "normal" },
+   { "name": "Shadow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Outline shadow", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

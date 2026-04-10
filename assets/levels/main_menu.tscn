@@ -5,11 +5,12 @@
 [ext_resource type="Script" path="res://assets/scripts/start.gd" id="2_jix8l"]
 
 [node name="Node2D" type="Node2D"]
+texture_filter = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 663.0
 offset_bottom = 374.0
-color = Color(0.344084, 0.118849, 0.599646, 1)
+color = Color(0.222022, 0.0630504, 0.400472, 1)
 
 [node name="MenuButton" type="MenuButton" parent="."]
 offset_left = 274.0
