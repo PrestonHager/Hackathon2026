@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://560i7ecmj2l"]
+
+[ext_resource type="Texture2D" uid="uid://1hd14vy6n4of" path="res://assets/sprites/Strat-0003.png" id="1_wn4k5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2f4q2"]
+
+[node name="Label" type="Label" unique_id=1215344892]
+offset_right = 637.0
+offset_bottom = 357.0
+text = "This simulation represents a simplified lunar mission. After completing mission payload requirments, you will watch the spacecraft launches from Earth in stage 1. The spacecraft enters orbit and then performs a transfer maneuver to enter an orbital path around the moon! This simulation demonstrates the key phases of spaceflight. Good luck on your mission!"
+autowrap_mode = 2
+
+[node name="MenuButton" type="MenuButton" parent="." unique_id=1333811170]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.102000006
+anchor_bottom = 0.23500001
+offset_left = 242.0
+offset_top = 200.0
+offset_right = 372.026
+offset_bottom = 192.105
+theme_override_colors/font_disabled_color = Color(1, 0.3019608, 0.2, 0.3019608)
+theme_override_colors/icon_normal_color = Color(0.21960784, 1, 1, 1)
+theme_override_colors/icon_disabled_color = Color(1, 0.20392157, 1, 0.4)
+theme_override_styles/normal = SubResource("StyleBoxFlat_2f4q2")
+text = "START"
+
+[node name="Strat0003" type="Sprite2D" parent="." unique_id=1637183943]
+position = Vector2(338, 242)
+texture = ExtResource("1_wn4k5")
