@@ -38,14 +38,14 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="Margin/VBox"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Mission success"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Margin/VBox"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Score = remaining budget ($M). Higher is better."
@@ -57,13 +57,13 @@ layout_mode = 2
 alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="Margin/VBox/ScoreRow"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Your score:"
 
 [node name="ScoreValue" type="Label" parent="Margin/VBox/ScoreRow"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "$0 M"
@@ -82,13 +82,13 @@ placeholder_text = "Your name"
 max_length = 24
 
 [node name="SaveBtn" type="Button" parent="Margin/VBox/NameRow"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 custom_minimum_size = Vector2(100, 28)
 text = "Save score"
 
 [node name="BoardLabel" type="Label" parent="Margin/VBox"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "Local scoreboard"
@@ -99,14 +99,14 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(0, 96)
 
 [node name="BoardText" type="Label" parent="Margin/VBox/BoardScroll"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
 [node name="MainMenuBtn" type="Button" parent="Margin/VBox"]
-texture_filter = 1
+texture_filter = 2
 layout_mode = 2
 custom_minimum_size = Vector2(0, 30)
 text = "Main menu"

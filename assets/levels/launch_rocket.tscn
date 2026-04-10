@@ -573,7 +573,7 @@ z_index = 5
 loop = false
 
 [node name="Earth" type="AnimatedSprite2D" parent="." unique_id=1277914742]
-texture_filter = 2
+texture_filter = 1
 z_index = 2
 position = Vector2(350.00003, 422.00003)
 scale = Vector2(4.9023438, 5.03125)
@@ -587,7 +587,7 @@ z_index = 5
 position = Vector2(320, 76)
 
 [node name="Rocket" type="Sprite2D" parent="PadAnchor" unique_id=1138897505]
-texture_filter = 2
+texture_filter = 1
 position = Vector2(7, 115)
 scale = Vector2(5.4375, 6.6354165)
 texture = ExtResource("4_24nbk")
