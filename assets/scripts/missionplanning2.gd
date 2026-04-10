@@ -85,7 +85,7 @@ func _on_back() -> void:
 
 
 func _on_next() -> void:
-	MissionState.launch_mission()
+	MissionState.go_explanation()
 
 
 func _requirements_line() -> String:

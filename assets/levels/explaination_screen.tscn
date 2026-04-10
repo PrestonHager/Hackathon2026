@@ -1,32 +1,73 @@
-[gd_scene format=3 uid="uid://560i7ecmj2l"]
+[gd_scene load_steps=3 format=3 uid="uid://b7sqw7wgae211"]
 
-[ext_resource type="Texture2D" uid="uid://1hd14vy6n4of" path="res://assets/sprites/Strat-0003.png" id="1_wn4k5"]
-[ext_resource type="Script" path="res://assets/scripts/dashed_polyline_2d.gd" id="2_2f4q2"]
+[ext_resource type="Script" path="res://assets/scripts/explaination_screen.gd" id="2_expl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2f4q2"]
 
-[node name="Label" type="Label" unique_id=1215344892]
-offset_right = 637.0
-offset_bottom = 357.0
-text = "This simulation represents a simplified lunar mission. After completing mission payload requirments, you will watch the spacecraft launches from Earth in stage 1. The spacecraft enters orbit and then performs a transfer maneuver to enter an orbital path around the moon! This simulation demonstrates the key phases of spaceflight. Good luck on your mission!"
-autowrap_mode = 2
+[node name="ExplanationScreen" type="Control"]
+texture_filter = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_expl")
 
-[node name="MenuButton" type="MenuButton" parent="." unique_id=1333811170]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.102000006
-anchor_bottom = 0.23500001
-offset_left = 242.0
-offset_top = 200.0
-offset_right = 372.026
-offset_bottom = 192.105
-theme_override_colors/font_disabled_color = Color(1, 0.3019608, 0.2, 0.3019608)
-theme_override_colors/icon_normal_color = Color(0.21960784, 1, 1, 1)
-theme_override_colors/icon_disabled_color = Color(1, 0.20392157, 1, 0.4)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.1, 0.18, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Mission briefing"
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 13
+text = "This simulation represents a simplified lunar mission. After completing mission payload requirements, you will watch the spacecraft launch from Earth and enter orbit, then perform a transfer maneuver into an orbit around the Moon. This simulation demonstrates the key phases of spaceflight. Good luck on your mission!"
+autowrap_mode = 3
+
+[node name="IconRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Nav" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BackBtn" type="Button" parent="Margin/VBox/Nav"]
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+text = "Back"
+
+[node name="ContinueBtn" type="Button" parent="Margin/VBox/Nav"]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_2f4q2")
 text = "START"
-
-[node name="Strat0003" type="Sprite2D" parent="." unique_id=1637183943]
-position = Vector2(338, 242)
-texture = ExtResource("1_wn4k5")
-script = ExtResource("2_2f4q2")

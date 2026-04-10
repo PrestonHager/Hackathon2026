@@ -553,7 +553,7 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D" unique_id=2128892199]
-texture_filter = 1
+texture_filter = 2
 script = ExtResource("1_je2b7")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=381770710]

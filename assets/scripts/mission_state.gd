@@ -1,10 +1,11 @@
 extends Node
 ## Shared budget and selections between crew (planning 1) and cargo (planning 2).
 
-enum PlanningPhase { NONE, CREW, CARGO }
+enum PlanningPhase { NONE, CREW, CARGO, EXPLANATION }
 
 const PATH_CREW := "res://assets/levels/missionplanning.tscn"
 const PATH_CARGO := "res://assets/levels/missionplanning2.tscn"
+const PATH_EXPLANATION := "res://assets/levels/explaination_screen.tscn"
 const PATH_MAIN_MENU := "res://assets/levels/main_menu.tscn"
 const PATH_GAME := "res://assets/levels/maingamescene.tscn"
 const PATH_WIN := "res://assets/levels/win_screen.tscn"
@@ -127,6 +128,14 @@ func go_cargo() -> void:
 func go_main_menu() -> void:
 	planning_phase = PlanningPhase.NONE
 	get_tree().change_scene_to_file(PATH_MAIN_MENU)
+
+
+## After cargo planning: briefing screen (Earth animation starts from `launch_mission`).
+func go_explanation() -> void:
+	if not cargo_requirements_met():
+		return
+	planning_phase = PlanningPhase.EXPLANATION
+	get_tree().change_scene_to_file(PATH_EXPLANATION)
 
 
 func launch_mission() -> void:

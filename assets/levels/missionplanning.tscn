@@ -14,7 +14,7 @@ font = SubResource("SystemFont_1nsk2")
 font_size = 13
 
 [node name="Node2D" type="Node2D"]
-texture_filter = 1
+texture_filter = 2
 script = ExtResource("1_f2mtr")
 
 [node name="Label" type="Label" parent="."]
