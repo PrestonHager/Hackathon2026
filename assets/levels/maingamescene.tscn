@@ -1,7 +1,8 @@
-[gd_scene load_steps=81 format=3 uid="uid://dtsf4q858pfus"]
+[gd_scene load_steps=84 format=3 uid="uid://dtsf4q858pfus"]
 
 [ext_resource type="Texture2D" uid="uid://jjicqher1scc" path="res://assets/sprites/moon.png" id="1_grax0"]
 [ext_resource type="Texture2D" uid="uid://bu6jinfmvo2wg" path="res://assets/sprites/Earth-Like planet.png" id="2_wtnim"]
+[ext_resource type="Texture2D" uid="uid://cdebydq1oafnf" path="res://assets/sprites/rocket-burn.png" id="3_sf148"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k480t"]
 atlas = ExtResource("2_wtnim")
@@ -550,13 +551,50 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Curve2D" id="Curve2D_re8ck"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 130, 0, 0, 0, 0, 0, 120.069, 49.748, 0, 0, 0, 0, 91.9239, 91.9239, 0, 0, 0, 0, 49.748, 120.069, 0, 0, 0, 0, 0, 130, 0, 0, 0, 0, -49.748, 120.069, 0, 0, 0, 0, -91.9239, 91.9239, 0, 0, 0, 0, -120.069, 49.748, 0, 0, 0, 0, -130, 0, 0, 0, 0, 0, -120.069, -49.748, 0, 0, 0, 0, -91.9239, -91.9239, 0, 0, 0, 0, -49.748, -120.069, 0, 0, 0, 0, 0, -130, 0, 0, 0, 0, 49.748, -120.069, 0, 0, 0, 0, 91.9239, -91.9239, 0, 0, 0, 0, 120.069, -49.748, 0, 0, 0, 0, 130, 0)
+}
+point_count = 17
+
+[sub_resource type="GDScript" id="GDScript_orbitfl"]
+script/source = "extends PathFollow2D
+
+const ORBIT_SPEED := 0.07
+
+func _process(delta: float) -> void:
+	progress_ratio += ORBIT_SPEED * delta
+"
+
 [node name="Node2D" type="Node2D"]
+texture_filter = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(603, 146)
+visible = false
+position = Vector2(562, 118)
 texture = ExtResource("1_grax0")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(213, 229)
+[node name="Earth" type="AnimatedSprite2D" parent="."]
+position = Vector2(346, 231)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_qawsa")
+
+[node name="OrbitPath" type="Path2D" parent="."]
+position = Vector2(320, 180)
+curve = SubResource("Curve2D_re8ck")
+
+[node name="OrbitVisual" type="Line2D" parent="OrbitPath"]
+points = PackedVector2Array(130, 0, 120.069, 49.748, 91.9239, 91.9239, 49.748, 120.069, 0, 130, -49.748, 120.069, -91.9239, 91.9239, -120.069, 49.748, -130, 0, -120.069, -49.748, -91.9239, -91.9239, -49.748, -120.069, 0, -130, 49.748, -120.069, 91.9239, -91.9239, 120.069, -49.748)
+closed = true
+width = 2.0
+default_color = Color(0.45, 0.65, 0.95, 0.55)
+
+[node name="RocketOrbit" type="PathFollow2D" parent="OrbitPath"]
+position = Vector2(130, 0)
+rotation = 1.76783
+script = SubResource("GDScript_orbitfl")
+
+[node name="Rocket" type="Sprite2D" parent="OrbitPath/RocketOrbit"]
+rotation = 1.5708
+scale = Vector2(5, 5)
+texture = ExtResource("3_sf148")
