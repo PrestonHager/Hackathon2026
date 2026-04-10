@@ -7,8 +7,6 @@ extends RefCounted
 static func tween_zoom_out_only(host: Node, camera: Camera2D, zoom: Vector2, duration: float) -> Variant:
 	var target := Vector2(minf(camera.zoom.x, zoom.x), minf(camera.zoom.y, zoom.y))
 	if is_equal_approx(target.x, camera.zoom.x) and is_equal_approx(target.y, camera.zoom.y):
-		if duration > 0.0:
-			return host.get_tree().create_timer(duration)
 		return null
 	var tw := host.create_tween()
 	tw.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

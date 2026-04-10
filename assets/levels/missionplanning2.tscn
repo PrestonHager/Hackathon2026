@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqm8k2cargop1"]
+
+[ext_resource type="Script" path="res://assets/scripts/missionplanning2.gd" id="1_cargo"]
+
+[node name="MissionPlanning2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cargo")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 4.0
+offset_right = -10.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Mission planning — cargo"
+
+[node name="BudgetLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Budget:"
+
+[node name="BudgetSlider" type="HSlider" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 18)
+
+[node name="ReqLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+autowrap_mode = 3
+
+[node name="SlotsLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Cargo units:"
+
+[node name="Scroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 108)
+
+[node name="Rows" type="VBoxContainer" parent="VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Nav" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="BackBtn" type="Button" parent="VBox/Nav"]
+layout_mode = 2
+custom_minimum_size = Vector2(112, 28)
+text = "Back"
+
+[node name="NextBtn" type="Button" parent="VBox/Nav"]
+layout_mode = 2
+custom_minimum_size = Vector2(128, 28)
+text = "Launch"

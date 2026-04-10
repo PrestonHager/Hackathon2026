@@ -48,6 +48,8 @@ enum Phase {
 @export var lunar_capture_duration: float = 2.15
 @export var lunar_capture_burn_fraction: float = 0.42
 @export var lunar_orbit_speed: float = 0.16
+## Full orbits of the Moon around Earth (map motion) after lunar capture, before the win screen.
+@export var moon_victory_laps: int = 2
 
 @export_group("Camera (higher zoom = closer; lower = wider; use non-increasing values top→bottom)")
 @export var zoom_intro: Vector2 = Vector2(0.72, 0.72)
@@ -301,6 +303,7 @@ func _attach_rocket_to_transfer(progress_on_path: float = -1.0) -> void:
 	sp = clampf(sp, 0.0, _transfer_curve_length)
 	rocket_transfer.progress = sp
 	await get_tree().process_frame
+	rocket.global_position = rocket_transfer.global_position
 	rocket.reparent(rocket_transfer, true)
 	rocket.position = Vector2.ZERO
 	rocket.rotation = MissionConstants.ROCKET_HEADING
@@ -359,6 +362,7 @@ func _begin_lunar_capture_sequence() -> void:
 	var loff: float = lunar_orbit_path.curve.get_closest_offset(lunar_orbit_path.to_local(rocket.global_position))
 	rocket_lunar.progress = loff
 	await get_tree().process_frame
+	rocket.global_position = rocket_lunar.global_position
 	rocket.reparent(rocket_lunar, true)
 	rocket.position = Vector2.ZERO
 	rocket.rotation = MissionConstants.ROCKET_HEADING
@@ -440,6 +444,26 @@ func _run_transfer_elapsed_from(start_p: float, burn_end: float, t_burn: float, 
 			)
 
 
+## Waits until the Moon completes `laps_needed` full circuits on the Earth-centered path (PathFollow2D progress_ratio 0→1).
+func _wait_moon_orbit_laps(laps_needed: float) -> void:
+	if laps_needed <= 0.0:
+		return
+	var total: float = 0.0
+	var prev: float = moon_follow.progress_ratio
+	_mdbg("LUNAR_ORBIT", "waiting %.2f moon orbit(s) around Earth" % laps_needed)
+	while total < laps_needed - 1e-5:
+		if not is_inside_tree():
+			return
+		await get_tree().process_frame
+		var p: float = moon_follow.progress_ratio
+		var d: float = p - prev
+		if d < -0.2:
+			d += 1.0
+		total += d
+		prev = p
+	_mdbg("LUNAR_ORBIT", "moon orbit laps done (tracked %.4f)" % total)
+
+
 func _encounter_moon_progress_ratio() -> float:
 	return MissionPathMath.progress_ratio_at_local(moon_path, Vector2(0.0, MissionConstants.MOON_R))
 
@@ -454,8 +478,12 @@ func _prime_moon_at_transfer_arrival() -> void:
 func _run_mission() -> void:
 	_phase = Phase.INTRO
 	_mdbg("INTRO", "camera + timer")
-	await _tween_camera_wait(zoom_intro, 0.35)
+	var intro_zoom: Variant = MissionCameraRoutines.tween_zoom_out_only(self, camera, zoom_intro, 0.35)
 	await get_tree().create_timer(intro_duration).timeout
+	if intro_zoom is Tween:
+		var tw: Tween = intro_zoom
+		if is_instance_valid(tw) and tw.is_running():
+			await tw.finished
 
 	# --- TEMP: liftoff phase disabled. Uncomment block below and remove this glue to restore. ---
 	leo_follow.progress = 0.0
@@ -583,3 +611,6 @@ func _run_mission() -> void:
 
 	_phase = Phase.LUNAR_ORBIT
 	_mdbg("LUNAR_ORBIT", "mission transfer sequence finished (rocket on lunar PathFollow)")
+	await _wait_moon_orbit_laps(float(moon_victory_laps))
+	_mdbg("WIN", "show score screen")
+	MissionState.go_win_screen()

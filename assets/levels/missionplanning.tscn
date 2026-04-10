@@ -1,106 +1,218 @@
-[gd_scene format=3 uid="uid://croii0y7x3l2b"]
+[gd_scene load_steps=8 format=3 uid="uid://croii0y7x3l2b"]
 
-[ext_resource type="Script" uid="uid://he372xb01a3s" path="res://assets/levels/missionplanning.gd" id="1_75yx1"]
-[ext_resource type="LabelSettings" uid="uid://c5u1wvf01h37m" path="res://assets/fonts/32pt-cambria.tres" id="1_oadnp"]
-[ext_resource type="LabelSettings" uid="uid://f1bloijf05wq" path="res://assets/fonts/48pt-cambria.tres" id="1_r4ud7"]
-[ext_resource type="Script" uid="uid://cv3i7ycb8qdvt" path="res://assets/levels/budget_slider.gd" id="3_bhwf2"]
+[ext_resource type="Script" path="res://assets/scripts/missionplanning.gd" id="1_f2mtr"]
 [ext_resource type="Texture2D" uid="uid://dlgake13m83xy" path="res://assets/sprites/Bug Astronaut.png" id="4_75yx1"]
 [ext_resource type="Texture2D" uid="uid://dtq3arylmjd4y" path="res://assets/sprites/Astronaut.png" id="5_1nsk2"]
 [ext_resource type="Texture2D" uid="uid://dkgi4ebot8yod" path="res://assets/sprites/Bear.png" id="6_dq1px"]
+[ext_resource type="Texture2D" uid="uid://bs8ubkv6l4x7u" path="res://assets/sprites/Buff Guy.png" id="7_buff"]
 
 [sub_resource type="SystemFont" id="SystemFont_1nsk2"]
 font_names = PackedStringArray("Cambria")
 
-[sub_resource type="LabelSettings" id="LabelSettings_dq1px"]
+[sub_resource type="LabelSettings" id="LabelSettings_hint"]
 font = SubResource("SystemFont_1nsk2")
-font_size = 22
+font_size = 13
 
-[node name="Node2D" type="Node2D" unique_id=962935798]
+[node name="Node2D" type="Node2D"]
 texture_filter = 1
-script = ExtResource("1_75yx1")
+script = ExtResource("1_f2mtr")
 
-[node name="Label" type="Label" parent="." unique_id=1451131717]
+[node name="Label" type="Label" parent="."]
 offset_left = 22.0
-offset_top = 9.0
-offset_right = 360.0
-offset_bottom = 66.0
-text = "Plan the mission"
-label_settings = ExtResource("1_r4ud7")
-
-[node name="budget" type="Label" parent="." unique_id=2143374042]
-offset_left = 25.0
-offset_top = 93.0
-offset_right = 223.0
-offset_bottom = 150.0
-text = "Budget: $50 M"
-label_settings = ExtResource("1_oadnp")
-
-[node name="Label" type="Label" parent="budget" unique_id=1103835381]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 142.0
-offset_right = 251.0
-offset_bottom = 231.0
+offset_top = 4.0
+offset_right = 520.0
+offset_bottom = 28.0
 theme_override_font_sizes/font_size = 20
-text = "passengers
-[select  up to 3]"
-label_settings = SubResource("LabelSettings_dq1px")
+text = "Mission planning — crew"
 
-[node name="budgetSlider" type="HSlider" parent="." unique_id=681819215]
-offset_left = 249.0
-offset_top = 94.0
-offset_right = 611.0
-offset_bottom = 134.0
-min_value = 25.0
+[node name="CostLegend" type="Label" parent="."]
+offset_left = 22.0
+offset_top = 30.0
+offset_right = 620.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 12
+text = "Costs: Alien $20M · Astro $15M · Bear $10M · Buff $18M"
+
+[node name="budget" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 46.0
+offset_right = 600.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 14
+text = "Budget: $75 M left  (started with $75 M)"
+
+[node name="crewTotalLabel" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 62.0
+offset_right = 600.0
+offset_bottom = 76.0
+theme_override_font_sizes/font_size = 13
+text = "Crew: 0 / 3  (use − / + to mix types)"
+label_settings = SubResource("LabelSettings_hint")
+
+[node name="budgetSlider" type="HSlider" parent="."]
+offset_left = 25.0
+offset_top = 78.0
+offset_right = 615.0
+offset_bottom = 92.0
 max_value = 75.0
 value = 75.0
-script = ExtResource("3_bhwf2")
+editable = false
 
-[node name="alien" type="TextureRect" parent="." unique_id=368874699]
-offset_left = 122.0
-offset_top = 159.0
-offset_right = 372.0
-offset_bottom = 369.0
+[node name="alien" type="TextureRect" parent="."]
+offset_left = 20.0
+offset_top = 94.0
+offset_right = 164.0
+offset_bottom = 256.0
 texture = ExtResource("4_75yx1")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="B1" type="Button" parent="alien" unique_id=1327755055]
+[node name="CountLabel" type="Label" parent="alien"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 145.0
-offset_right = 158.0
-offset_bottom = 181.0
-text = "ADD"
+offset_left = 40.0
+offset_top = 58.0
+offset_right = 100.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
 
-[node name="B2" type="Button" parent="alien/B1" unique_id=1276507988]
+[node name="Minus" type="Button" parent="alien"]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 1.0
-offset_right = 189.0
-offset_bottom = 37.0
-text = "ADD"
+offset_left = 4.0
+offset_top = 82.0
+offset_right = 44.0
+offset_bottom = 106.0
+text = "−"
 
-[node name="B3" type="Button" parent="alien/B1/B2" unique_id=1394779084]
+[node name="Plus" type="Button" parent="alien"]
 layout_mode = 0
-offset_left = 114.0
-offset_top = -2.0
-offset_right = 191.0
-offset_bottom = 34.0
-text = "ADD"
+offset_left = 100.0
+offset_top = 82.0
+offset_right = 140.0
+offset_bottom = 106.0
+text = "+"
 
-[node name="astronaut" type="TextureRect" parent="." unique_id=1760315696]
-offset_left = 262.0
-offset_top = 175.0
-offset_right = 435.0
-offset_bottom = 332.0
+[node name="astronaut" type="TextureRect" parent="."]
+offset_left = 172.0
+offset_top = 94.0
+offset_right = 316.0
+offset_bottom = 256.0
 texture = ExtResource("5_1nsk2")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="bear" type="TextureRect" parent="." unique_id=775624682]
-offset_left = 382.0
-offset_top = 175.0
-offset_right = 540.0
-offset_bottom = 325.0
+[node name="CountLabel" type="Label" parent="astronaut"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 58.0
+offset_right = 100.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="Minus" type="Button" parent="astronaut"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 82.0
+offset_right = 44.0
+offset_bottom = 106.0
+text = "−"
+
+[node name="Plus" type="Button" parent="astronaut"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 82.0
+offset_right = 140.0
+offset_bottom = 106.0
+text = "+"
+
+[node name="bear" type="TextureRect" parent="."]
+offset_left = 324.0
+offset_top = 94.0
+offset_right = 468.0
+offset_bottom = 256.0
 texture = ExtResource("6_dq1px")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="CGMarker" type="Marker2D" parent="." unique_id=630890711]
-position = Vector2(-37.485714, -27.97861)
-scale = Vector2(0.114285715, 0.12834224)
+[node name="CountLabel" type="Label" parent="bear"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 58.0
+offset_right = 100.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="Minus" type="Button" parent="bear"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 82.0
+offset_right = 44.0
+offset_bottom = 106.0
+text = "−"
+
+[node name="Plus" type="Button" parent="bear"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 82.0
+offset_right = 140.0
+offset_bottom = 106.0
+text = "+"
+
+[node name="BuffGuy" type="TextureRect" parent="."]
+offset_left = 476.0
+offset_top = 94.0
+offset_right = 620.0
+offset_bottom = 256.0
+texture = ExtResource("7_buff")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CountLabel" type="Label" parent="BuffGuy"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 58.0
+offset_right = 112.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="Minus" type="Button" parent="BuffGuy"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 82.0
+offset_right = 48.0
+offset_bottom = 106.0
+text = "−"
+
+[node name="Plus" type="Button" parent="BuffGuy"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 82.0
+offset_right = 148.0
+offset_bottom = 106.0
+text = "+"
+
+[node name="BackBtn" type="Button" parent="."]
+offset_left = 24.0
+offset_top = 264.0
+offset_right = 164.0
+offset_bottom = 298.0
+text = "Back"
+
+[node name="NextBtn" type="Button" parent="."]
+offset_left = 476.0
+offset_top = 264.0
+offset_right = 616.0
+offset_bottom = 298.0
+text = "Next"
+
+[node name="CGMarker" type="Marker2D" parent="."]
+position = Vector2(-37.4857, -27.9786)
+scale = Vector2(0.114286, 0.128342)

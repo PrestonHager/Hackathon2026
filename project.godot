@@ -19,6 +19,11 @@ run/main_scene="res://assets/levels/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MissionState="*res://assets/scripts/mission_state.gd"
+HighScores="*res://assets/scripts/high_scores.gd"
+
 [display]
 
 window/size/viewport_width=640
