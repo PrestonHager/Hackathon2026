@@ -57,6 +57,9 @@ enum Phase {
 @export var earth_animation: StringName = &"Earth"
 @export var earth_anim_speed_scale: float = 1.0
 
+@export_group("Debug")
+@export var mission_debug_logging: bool = true
+
 @onready var camera: Camera2D = $Camera2D
 @onready var ksp_overlay: Node2D = $KspOrbitOverlay
 @onready var earth: AnimatedSprite2D = $Earth
@@ -88,9 +91,25 @@ var _transfer_coast_cam_t: float = 0.0
 var _transfer_coast_p0: float = 0.0
 var _transfer_coast_p1: float = 0.0
 var _transfer_coast_cam_duration: float = 1.0
+## Transfer tween segment logging: last_segment tracks burn/coast/early_coast transitions.
+var _transfer_burn_debug_state: Dictionary = {"last_segment": -1}
+
+
+func _phase_name() -> String:
+	return Phase.keys()[_phase]
+
+
+func _mdbg(step: String, detail: String = "") -> void:
+	if not mission_debug_logging:
+		return
+	if detail.is_empty():
+		print("[Mission] phase=", _phase_name(), " | ", step)
+	else:
+		print("[Mission] phase=", _phase_name(), " | ", step, " | ", detail)
 
 
 func _ready() -> void:
+	_transfer_burn_debug_state["last_segment"] = -1
 	_align_world_to_earth()
 	camera.zoom = zoom_intro
 	camera.make_current()
@@ -116,6 +135,7 @@ func _ready() -> void:
 	var peri_off: float = leo_path.curve.get_closest_offset(Vector2(0.0, -MissionConstants.LEO_R))
 	leo_follow.progress = peri_off
 	_set_rocket_coast()
+	_mdbg("READY", "curve_len=%s xfer_after_growth will be set later" % _transfer_curve_length)
 	_run_mission()
 
 
@@ -178,6 +198,7 @@ func _transfer_growth_with_rocket_step(u: float) -> void:
 
 
 func _run_transfer_visual_growth_with_rocket() -> void:
+	_mdbg("TRANSFER_GROWTH", "reparent rocket under TransferPath, tween dashed orbit")
 	rocket.reparent(transfer_path, true)
 	rocket.z_index = 6
 	_set_rocket_burning()
@@ -192,6 +213,7 @@ func _run_transfer_visual_growth_with_rocket() -> void:
 	_xfer_progress_after_growth = _transfer_curve_length * frac
 	rocket.position = _transfer_morphed_point(_xfer_progress_after_growth, 1.0)
 	rocket.rotation = _transfer_morphed_heading(_xfer_progress_after_growth, 1.0) + MissionConstants.ROCKET_HEADING
+	_mdbg("TRANSFER_GROWTH", "done xfer_prog=%s attaching PathFollow" % snappedf(_xfer_progress_after_growth, 0.1))
 	await _attach_rocket_to_transfer(_xfer_progress_after_growth)
 
 
@@ -202,11 +224,20 @@ func _begin_transfer_camera_coast() -> void:
 	_transfer_coast_cam_duration = maxf(camera_zoom_duration * 0.85 + camera_wide_duration, 0.05)
 	_transfer_coast_cam_t = 0.0
 	_transfer_coast_cam_active = true
+	_mdbg(
+		"CAMERA_COAST",
+		"p0=%s p1=%s dur=%s (moon still hidden)" % [
+			snappedf(_transfer_coast_p0, 0.1),
+			snappedf(_transfer_coast_p1, 0.1),
+			snappedf(_transfer_coast_cam_duration, 0.01)
+		]
+	)
 
 
 func _end_transfer_camera_coast() -> void:
 	_transfer_coast_cam_active = false
-	rocket_transfer.progress = _transfer_coast_p1
+	rocket_transfer.progress = lerpf(_transfer_coast_p0, _transfer_coast_p1, 1.0)
+	_mdbg("CAMERA_COAST", "end progress=%s" % snappedf(rocket_transfer.progress, 0.1))
 
 
 func _tween_camera_wait(zoom: Vector2, duration: float) -> void:
@@ -228,6 +259,7 @@ func _set_rocket_coast() -> void:
 
 
 func _attach_rocket_to_leo() -> void:
+	_mdbg("ATTACH_LEO", "snap rocket to RocketLEO at peri")
 	var peri_off: float = leo_path.curve.get_closest_offset(Vector2(0.0, -MissionConstants.LEO_R))
 	leo_follow.progress = peri_off
 	await get_tree().process_frame
@@ -255,6 +287,7 @@ func _wait_leo_min_then_periapsis() -> void:
 
 func _attach_rocket_to_transfer(progress_on_path: float = -1.0) -> void:
 	var sp: float = progress_on_path if progress_on_path >= 0.0 else clampf(_xfer_progress_after_growth, 0.0, _transfer_curve_length)
+	_mdbg("ATTACH_TRANSFER", "RocketTransfer.progress=%s clen=%s" % [snappedf(sp, 0.1), snappedf(_transfer_curve_length, 0.1)])
 	sp = clampf(sp, 0.0, _transfer_curve_length)
 	rocket_transfer.progress = sp
 	await get_tree().process_frame
@@ -285,6 +318,7 @@ func _capture_lunar_step(w_lin: float) -> void:
 
 
 func _begin_lunar_capture_sequence() -> void:
+	_mdbg("LUNAR_CAPTURE", "start — reparent rocket to mission root for capture tween")
 	ksp_overlay.set_transfer_apsides_visible(false)
 	rocket.reparent(self, true)
 	transfer_visual.reparent(self, false)
@@ -340,6 +374,28 @@ func _process(delta: float) -> void:
 			rocket_lunar.progress_ratio += lunar_orbit_speed * delta
 
 
+## Must match branch order in `MissionTransferBurn.run_elapsed_from`.
+func _transfer_debug_segment_index(start_p: float, burn_end: float, clen: float, t_burn: float, elapsed: float) -> int:
+	var d_burn_end: float = clampf(burn_end, 0.04, 0.45) * clen
+	var sp: float = clampf(start_p, 0.0, clen)
+	var t_b: float = maxf(t_burn, 1e-5)
+	if sp >= d_burn_end - 0.25:
+		return 2
+	if elapsed < t_b:
+		return 0
+	return 1
+
+
+func _transfer_debug_segment_name(segment: int) -> String:
+	match segment:
+		2:
+			return "early_coast"
+		1:
+			return "coast"
+		_:
+			return "burn"
+
+
 func _run_transfer_elapsed_from(start_p: float, burn_end: float, t_burn: float, t_coast: float, elapsed: float) -> void:
 	MissionTransferBurn.run_elapsed_from(
 		rocket_transfer,
@@ -353,25 +409,48 @@ func _run_transfer_elapsed_from(start_p: float, burn_end: float, t_burn: float, 
 		t_coast,
 		elapsed
 	)
+	if mission_debug_logging:
+		var seg: int = _transfer_debug_segment_index(
+			start_p, burn_end, _transfer_curve_length, t_burn, elapsed
+		)
+		if seg != _transfer_burn_debug_state.get("last_segment", -999):
+			_transfer_burn_debug_state["last_segment"] = seg
+			var clen: float = _transfer_curve_length
+			var dbe: float = clampf(burn_end, 0.04, 0.45) * clen
+			var sp: float = clampf(start_p, 0.0, clen)
+			_mdbg(
+				"TRANSFER_BURN",
+				"segment=%s elapsed=%s progress=%s / clen=%s start_p=%s d_burn_end=%s"
+				% [
+					_transfer_debug_segment_name(seg),
+					snappedf(elapsed, 0.01),
+					snappedf(rocket_transfer.progress, 0.1),
+					snappedf(clen, 0.1),
+					snappedf(sp, 0.1),
+					snappedf(dbe, 0.1)
+				]
+			)
 
 
 func _encounter_moon_progress_ratio() -> float:
 	return MissionPathMath.progress_ratio_at_local(moon_path, Vector2(0.0, MissionConstants.MOON_R))
 
 
-func _prime_moon_phase_for_encounter() -> void:
-	var t_remain: float = camera_zoom_duration * 0.85 + camera_wide_duration + 0.08
-	t_remain += transfer_burn_duration + transfer_coast_duration
+## Moon stays hidden until transfer ends; place it on the Earth orbit at the encounter angle (+Y / apo side).
+func _prime_moon_at_transfer_arrival() -> void:
 	var enc: float = _encounter_moon_progress_ratio()
-	moon_follow.progress_ratio = fposmod(enc - moon_orbit_speed * t_remain, 1.0)
+	moon_follow.progress_ratio = enc
+	_mdbg("MOON", "visible after transfer — progress_ratio=%s (encounter)" % snappedf(enc, 0.0001))
 
 
 func _run_mission() -> void:
 	_phase = Phase.INTRO
+	_mdbg("INTRO", "camera + timer")
 	await _tween_camera_wait(zoom_intro, 0.35)
 	await get_tree().create_timer(intro_duration).timeout
 
 	_phase = Phase.LIFTOFF
+	_mdbg("LIFTOFF", "begin ascent")
 	var peri_off_lift: float = leo_path.curve.get_closest_offset(Vector2(0.0, -MissionConstants.LEO_R))
 	leo_follow.progress = peri_off_lift
 	await get_tree().process_frame
@@ -408,8 +487,10 @@ func _run_mission() -> void:
 	_set_rocket_coast()
 
 	await _attach_rocket_to_leo()
+	_mdbg("LIFTOFF", "attached LEO PathFollow")
 
 	_phase = Phase.LEO_ORBIT
+	_mdbg("LEO_ORBIT", "circularization + wait peri")
 	_leo_circ_elapsed = 0.0
 	await _tween_camera_wait(zoom_leo, camera_zoom_duration)
 	orbit_visual.visible = true
@@ -419,17 +500,15 @@ func _run_mission() -> void:
 	_set_rocket_coast()
 
 	await _wait_leo_min_then_periapsis()
+	_mdbg("LEO_ORBIT", "periapsis reached — start transfer ellipse growth (moon still off)")
 
 	transfer_visual.visible = true
 	ksp_overlay.set_transfer_apsides_visible(true)
 	await _run_transfer_visual_growth_with_rocket()
 
-	moon.visible = true
-	moon_orbit_visual.visible = true
-	_prime_moon_phase_for_encounter()
-	_moon_motion_enabled = true
-
+	# Complete Earth→transfer leg (camera coast + burn + coast) before showing the moon to avoid map / motion jumps.
 	_phase = Phase.TRANSFER_BURN
+	_mdbg("TRANSFER_BURN", "moon hidden; camera coast then burn tween along PathFollow2D")
 	_begin_transfer_camera_coast()
 	await _tween_camera_wait(zoom_transfer_reveal, camera_zoom_duration * 0.85)
 	await _tween_camera_wait(zoom_full_system, camera_wide_duration)
@@ -438,18 +517,46 @@ func _run_mission() -> void:
 	var burn_end: float = clampf(transfer_burn_path_fraction, 0.04, 0.45)
 	var t_total: float = transfer_burn_duration + transfer_coast_duration
 	var p_burn_start: float = rocket_transfer.progress
+	_mdbg(
+		"TRANSFER_BURN",
+		"tween START p_start=%s burn_end_frac=%s t_burn=%s t_coast=%s t_total=%s clen=%s"
+		% [
+			snappedf(p_burn_start, 0.1),
+			burn_end,
+			transfer_burn_duration,
+			transfer_coast_duration,
+			t_total,
+			snappedf(_transfer_curve_length, 0.1)
+		]
+	)
+	_transfer_burn_debug_state["last_segment"] = -1
 	var tw_xfer := create_tween()
+	# tween_method passes the interpolated float as the *first* argument; Callable.bind() appends after it,
+	# so .bind(start_p, …) wrongly maps elapsed → start_p. Forward elapsed explicitly as the last parameter.
 	tw_xfer.tween_method(
-		_run_transfer_elapsed_from.bind(p_burn_start, burn_end, transfer_burn_duration, transfer_coast_duration),
+		func(transfer_elapsed: float) -> void:
+			_run_transfer_elapsed_from(
+				p_burn_start, burn_end, transfer_burn_duration, transfer_coast_duration, transfer_elapsed
+			),
 		0.0,
 		t_total,
 		t_total
 	)
 	await tw_xfer.finished
-	rocket_transfer.progress = _transfer_curve_length
-	rocket_transfer.progress_ratio = 1.0
+	rocket_transfer.progress = clampf(rocket_transfer.progress, 0.0, _transfer_curve_length)
 	_set_rocket_coast()
+	_mdbg(
+		"TRANSFER_BURN",
+		"tween DONE progress=%s / %s — revealing moon + orbit"
+		% [snappedf(rocket_transfer.progress, 0.1), snappedf(_transfer_curve_length, 0.1)]
+	)
+
+	moon.visible = true
+	moon_orbit_visual.visible = true
+	_prime_moon_at_transfer_arrival()
+	_moon_motion_enabled = true
 
 	await _begin_lunar_capture_sequence()
 
 	_phase = Phase.LUNAR_ORBIT
+	_mdbg("LUNAR_ORBIT", "mission transfer sequence finished (rocket on lunar PathFollow)")
