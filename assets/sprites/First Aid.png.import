@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs8ubkv6l4x7u"
-path="res://.godot/imported/Buff Guy.png-e21c262cc4be0ec09b55a11be71612e6.ctex"
+uid="uid://ce4usubi8d307"
+path="res://.godot/imported/First Aid.png-0fae0acebe345803a1646d8910e25e13.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Buff Guy.png"
-dest_files=["res://.godot/imported/Buff Guy.png-e21c262cc4be0ec09b55a11be71612e6.ctex"]
+source_file="res://assets/sprites/First Aid.png"
+dest_files=["res://.godot/imported/First Aid.png-0fae0acebe345803a1646d8910e25e13.ctex"]
 
 [params]
 

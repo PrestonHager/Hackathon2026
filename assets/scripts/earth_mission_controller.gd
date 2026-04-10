@@ -49,7 +49,7 @@ enum Phase {
 @export var lunar_capture_burn_fraction: float = 0.42
 @export var lunar_orbit_speed: float = 0.16
 ## Full orbits of the Moon around Earth (map motion) after lunar capture, before the win screen.
-@export var moon_victory_laps: int = 2
+@export var moon_victory_laps: float = 0.25
 
 @export_group("Camera (higher zoom = closer; lower = wider; use non-increasing values top→bottom)")
 @export var zoom_intro: Vector2 = Vector2(0.72, 0.72)
@@ -611,6 +611,6 @@ func _run_mission() -> void:
 
 	_phase = Phase.LUNAR_ORBIT
 	_mdbg("LUNAR_ORBIT", "mission transfer sequence finished (rocket on lunar PathFollow)")
-	await _wait_moon_orbit_laps(float(moon_victory_laps))
+	await _wait_moon_orbit_laps(moon_victory_laps)
 	_mdbg("WIN", "show score screen")
 	MissionState.go_win_screen()

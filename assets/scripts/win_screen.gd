@@ -1,6 +1,6 @@
 extends Control
 
-@onready var _score_value: Label = $Margin/VBox/ScoreValue
+@onready var _score_value: Label = $Margin/VBox/ScoreRow/ScoreValue
 @onready var _name_field: LineEdit = $Margin/VBox/NameRow/NameField
 @onready var _save_btn: Button = $Margin/VBox/NameRow/SaveBtn
 @onready var _board: Label = $Margin/VBox/BoardScroll/BoardText

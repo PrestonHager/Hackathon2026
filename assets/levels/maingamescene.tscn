@@ -640,7 +640,6 @@ default_color = Color(0.68, 0.7, 0.9, 0.48)
 z_index = 5
 position = Vector2(235, 0)
 rotates = false
-loop = true
 
 [node name="Moon" type="Sprite2D" parent="MoonOrbitPath/MoonFollow"]
 z_index = 1
@@ -652,4 +651,3 @@ offset = Vector2(-2, 1)
 
 [node name="RocketLunar" type="PathFollow2D" parent="MoonOrbitPath/MoonFollow/LunarOrbitPath"]
 z_index = 5
-loop = true
