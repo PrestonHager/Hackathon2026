@@ -1,4 +1,32 @@
-[gd_scene format=3 uid="uid://croii0y7x3l2b"]
+[gd_scene load_steps=3 format=3 uid="uid://croii0y7x3l2b"]
+
+[ext_resource type="LabelSettings" uid="uid://c5u1wvf01h37m" path="res://assets/fonts/32pt-cambria.tres" id="1_oadnp"]
+[ext_resource type="LabelSettings" uid="uid://f1bloijf05wq" path="res://assets/fonts/48pt-cambria.tres" id="1_r4ud7"]
 
 [node name="Node2D" type="Node2D"]
 texture_filter = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 22.0
+offset_top = 9.0
+offset_right = 360.0
+offset_bottom = 66.0
+text = "Plan the mission"
+label_settings = ExtResource("1_r4ud7")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 113.0
+offset_right = 210.0
+offset_bottom = 170.0
+text = "Budget: $50 M"
+label_settings = ExtResource("1_oadnp")
+
+[node name="HSlider" type="HSlider" parent="."]
+offset_left = 251.0
+offset_top = 126.0
+offset_right = 613.0
+offset_bottom = 142.0
+min_value = 25.0
+max_value = 75.0
+value = 50.0

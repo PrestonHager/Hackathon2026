@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c5u1wvf01h37m"]
+
+[sub_resource type="SystemFont" id="SystemFont_pe787"]
+font_names = PackedStringArray("Cambria")
+oversampling = 10.0
+
+[resource]
+font = SubResource("SystemFont_pe787")
+font_size = 32
